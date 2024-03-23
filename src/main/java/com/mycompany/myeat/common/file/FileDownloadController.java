@@ -21,7 +21,8 @@ public class FileDownloadController {
     @Autowired
     ProductVO productVO;
 
-	private static String img = "C:\\Users\\vmfdo\\StudySource\\mulcam_eclipse3916\\todayeat\\src\\main\\webapp\\resources\\images";
+//    깃허브 업로드
+	private static String img = "";
     
     // 경로 수정
     private static final String PRODUCT_IMAGE_REPO = img;
