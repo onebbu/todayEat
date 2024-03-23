@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.review">
+    <resultMap id="revResult" type="reviewVO">
+        <result property="prodno" column="prodno" />
+        <result property="rating" column="rating" />
+        <result property="content" column="content" />
+        <result property="indate" column="indate" />
+        <result property="useYN" column="useYN" />
+        <result property="revno" column="revno" />
+        <result property="odno" column="odno" />
+    </resultMap>
+
+
+<!--    리뷰 조회-->
+<!--    prodno, prodname, 리뷰 점수, 아이디, 날짜, 리뷰 내용, 이미지(조인) 필요-->
+    <select id="selectReviews" resultMap="revResult" parameterType="int">
+        select a.prodno,
+               b.prodname,
+               a.rating,
+               a.userid,
+               a.indate,
+               a.content,
+               b.img,
+               a.revno,
+               a.useyn
+        from review_t a
+                 left outer join product_t b
+                                 on a.prodno = b.prodno
+        where a.prodno = #{prodno} and a.useyn='y'
+        order by a.indate
+    </select>
+
+
+    <select id="selectReviewProduct" resultType="reviewVO" parameterType="int">
+        select distinct a.prodno, b.prodname, a.useyn from review_t a
+                                                      left outer join product_t b
+                                                                      on a.prodno = b.prodno
+        where a.prodno = #{prodno} and a.useyn='y'
+    </select>
+
+
+<!--    리뷰 삭제-->
+<!--    상품 삭제할때처럼 리뷰 삭제-->
+    <update id="deleteReview"  parameterType="int" >
+     <![CDATA[
+        update review_t
+        set useyn='n'
+        where
+            revno=#{id}
+        ]]>
+   </update>
+
+</mapper>

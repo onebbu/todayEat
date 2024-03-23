@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.chart">
+	<resultMap id="chartResult" type="chartVO">
+        <result property="price" column="price" />
+		<result property="orderno" column="orderno" />
+		<result property="quantity" column="quantity" />
+        <result property="cat" column="cat" />
+        <result property="date_from" column="date_from" />
+        <result property="date_to" column="date_to" />
+        <result property="box01" column="box01" />
+	</resultMap>
+
+	<select id="selectbox1" resultType="int" parameterType="chartVO"> <!-- 기간 내 결제 금액 -->
+      <![CDATA[
+         select sum(p.price) from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		join product_t P on od.prodno = p.prodno
+		where o.orderdate between #{date_from} and #{date_to}
+      ]]>
+	</select>
+	
+	<select id="selectbox2" resultType="int" parameterType="chartVO" > <!-- 기간 내 결제 건수 -->
+		<![CDATA[
+		select count(distinct O.orderno) from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		join product_t P on od.prodno = p.prodno
+		where o.orderdate between #{date_from} and #{date_to}
+		]]>
+	</select>
+	
+	<select id="selectbox3" resultType="int" parameterType="chartVO" > <!-- 기간 내 결제 상품 수량 -->
+		<![CDATA[
+		select sum(od.quantity)  from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		where o.orderdate between #{date_from} and #{date_to}
+		order by O.orderno
+		]]>
+	</select>
+	
+	<select id="selectbox4" resultType="String" parameterType="chartVO"> <!-- 기간 내 최고 결제 금액 카테고리 -->
+		<![CDATA[
+		select 카테고리 from(
+		select O.orderdate, O.orderno,od.odno, od.prodno,(od.quantity* p.price) as 결제금액, p.cat as 카테고리 from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		join product_t P on od.prodno = p.prodno
+		where o.orderdate between #{date_from} and #{date_to}
+		order by 결제금액 desc
+		) where rownum = 1
+		]]>
+	</select>
+	
+	<select id="selectbox4-1" resultType="int" parameterType="chartVO"> <!-- 기간 내 최고 결제 금액 카테고리 -->
+		<![CDATA[
+		select 결제금액 from(
+		select O.orderdate, O.orderno,od.odno, od.prodno,(od.quantity* p.price) as 결제금액, p.cat as 카테고리 from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		join product_t P on od.prodno = p.prodno
+		where o.orderdate between #{date_from} and #{date_to}
+		order by 결제금액 desc
+		) where rownum = 1
+		]]>
+	</select>
+	
+	<select id="selectbox5" resultType="String" parameterType="chartVO"> <!-- 기간 내 최고 결제 수량 카테고리 -->
+		<![CDATA[
+		select 카테고리 from(
+		select sum(od.quantity) as 수량, p.cat as 카테고리 from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		join product_t P on od.prodno = p.prodno
+		where o.orderdate between #{date_from} and #{date_to}
+		group by p.cat
+		order by 수량 desc) where rownum = 1
+		]]>
+	</select>
+	
+	<select id="selectbox5-1" resultType="int" parameterType="chartVO"> <!-- 기간 내 최고 결제 수량 카테고리 -->
+		<![CDATA[
+		select 수량 from(
+		select sum(od.quantity) as 수량, p.cat as 카테고리 from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		join product_t P on od.prodno = p.prodno
+		where o.orderdate between #{date_from} and #{date_to}
+		group by p.cat
+		order by 수량 desc) where rownum = 1
+		]]>
+	</select>
+
+	<select id="selectbox6" resultType="String" parameterType="chartVO"> <!-- 기간 내 최고 결제 수량 카테고리 -->
+		<![CDATA[
+		select payment from(
+		select count(orderno) as 결제건수, payment from order_t 
+		where orderdate between #{date_from} and #{date_to}
+		group by payment 
+		order by 결제건수 desc) where rownum = 1
+		]]>
+	</select>
+	
+	<select id="selectbox6-1" resultType="int" parameterType="chartVO"> <!-- 기간 내 최고 결제 수량 카테고리 -->
+		<![CDATA[
+		select 결제건수 from(
+		select count(orderno) as 결제건수, payment from order_t 
+		where orderdate between #{date_from} and #{date_to}
+		group by payment 
+		order by 결제건수 desc) where rownum = 1
+		]]>
+	</select>
+	
+	<select id = "weekSumPrice" resultType="int" parameterType="Map">
+		select NVL(SUM(p.price), 0) from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		join product_t P on od.prodno = p.prodno
+		where o.orderdate between #{date_from , jdbcType=DATE} and #{date_to , jdbcType=DATE} and to_char(o.orderdate,'d') = #{i , jdbcType=INTEGER }
+	</select>
+	
+	<select id = "monthSumPrice" resultType="int" parameterType="Map"> <!-- 월별 category 매출. -->
+		select NVL(sum(p.price), 0) from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		join product_t P on od.prodno = p.prodno
+		where o.orderdate between #{start } and #{end } and cat = #{cat}
+	</select>
+	
+	<select id = "monthCntCat" resultType="int" parameterType="Map"> <!-- 월별 category 건수. -->
+		select count(odno) * 10 from order_t O
+		join orderdetail OD on o.orderno = od.orderno
+		join product_t P on od.prodno = p.prodno
+		where o.orderdate between #{start } and #{end } and cat = #{cat}
+	</select>
+</mapper>

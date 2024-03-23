@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.product">
+	<resultMap id="prodResult" type="productVO">
+		<result property="prodno" column="prodno" />
+        <result property="prodname" column="prodname" />
+        <result property="price" column="price" />
+        <result property="descr" column="descr" />
+        <result property="useyn" column="useyn" />
+        <result property="cat" column="cat" />
+	</resultMap>
+	
+	<resultMap id="imgResult" type="imageVO">
+	  <result property="imageFileNO" column="imageFileNO" />
+	  <result property="productNO" column="productNO" />
+	  <result property="imageFileName" column="imageFileName" />
+ 	</resultMap>
+
+	<select id="selectAllProductList" resultMap="prodResult">
+      <![CDATA[
+        select
+            distinct a.prodno,
+                     a.prodname,
+                     a.price,
+                     a.img,
+                     round(avg(nvl(b.rating,0)) over(partition by b.prodno),1) as "avgRating"
+        from product_t a
+                 left outer join review_t b
+                                 on a.prodno = b.prodno
+        where a.useyn='y'
+        order by a.prodno
+      ]]>
+	</select>
+	
+	<select id="selectProduct" resultMap="prodResult" parameterType="int">
+    	<![CDATA[
+		
+		select distinct a.prodno,
+                a.prodname,
+                a.price,
+                a.img,
+                a.descr,
+                a.cat,
+                round(avg(nvl(b.rating,0)) over(partition by b.prodno),1) as "avgRating"
+			from product_t a
+			left outer join review_t b on a.prodno = b.prodno
+			where a.prodno = #{prodno}
+    	]]>
+	</select>
+	
+    <select id="productSearch" resultMap="prodResult" parameterType="String">
+      <![CDATA[
+        select
+            distinct a.prodno,
+                     a.prodname,
+                     a.price,
+                     a.img,
+                     round(avg(nvl(b.rating,0)) over(partition by b.prodno),1) as "avgRating"
+        from product_t a
+                 left outer join review_t b
+                                 on a.prodno = b.prodno
+        where a.useyn='y' and a.prodname like '%'||#{keyword}||'%'
+        ]]>
+	</select>
+    
+    <select id="countProducts" resultType="int" parameterType="criteria">
+    
+     	select count(prodno)
+     	from product_t
+     	where
+     	<choose>
+     		<when test="keyword==null">
+     			useyn = 'y' 
+     		</when>
+     		<otherwise> 
+     			useyn = 'y' and prodname like '%'||#{keyword, jdbcType=VARCHAR}||'%'
+     		</otherwise>
+     	</choose>
+
+    </select>
+    
+	<select id="searchSortProducts" resultMap="prodResult" parameterType="criteria">
+		  select *
+        from(select  ROW_NUMBER() OVER(ORDER BY
+                <!--정렬-->
+                <choose>
+                    <when test="sortType==null">
+                        prodno asc
+                    </when>
+                    <when test="sortType=='korean'">
+                        prodname asc
+                    </when>
+                    <when test="sortType=='priceAsc'">
+                        price asc
+                    </when>
+                    <when test="sortType=='priceDesc'">
+                        price desc
+                    </when>
+                    <when test="sortType=='ratingAsc'">
+                        "avgRating" asc
+                    </when>
+                    <when test="sortType=='ratingDesc'">
+                        "avgRating" desc
+                    </when>
+                </choose>
+                ) AS RNUM,
+                prodno,
+                prodname,
+                price,
+                img,
+                "avgRating"
+                from (select distinct a.prodno,
+                        a.prodname,
+                        a.price,
+                        a.img,
+                        round(avg(nvl(b.rating,0)) over(partition by b.prodno),1) as "avgRating",
+                        a.useyn
+                        from product_t a
+                        left outer join review_t b
+                        on a.prodno = b.prodno
+                        <!--검색-->
+                        <choose>
+                            <when test="keyword==null">
+                                where a.useyn = 'y'
+                            </when>
+                            <otherwise>
+                                where a.useyn = 'y' and a.prodname like '%'||#{keyword}||'%'
+                            </otherwise>
+                        </choose>) mp)
+        <!--보여줄 페이지-->
+        where RNUM between #{pageStart} and ((#{pageStart})+#{perPageNum}-1)
+
+
+    </select>
+	
+	
+    <update id="deleteProduct"  parameterType="int" >
+     <![CDATA[
+        update product_t
+        set useyn='n'
+        where
+            prodno=#{id, jdbcType=INTEGER}
+        ]]>
+   </update>
+   
+      <insert id="insertNewProduct"  parameterType="java.util.Map">
+      <!-- jsp 파일 부분의 key/value 는 name 태그/유저가 입력한값 -->
+		<![CDATA[
+			INSERT into product_t(prodno,  prodname, price, descr,img, cat)
+			VALUES(#{prodno},#{prodname},#{price , jdbcType=INTEGER}, #{descr},#{imageFileName},#{product-category})
+		]]>      
+	</insert>
+	
+	 <select id="selectNewProductNO" resultType="int"  >
+		<![CDATA[
+			SELECT  nvl(max(prodno),0)+1 from product_t		
+		]]>
+	</select>
+	
+	<select id="selectNewImageFileNO" resultType="int"  >
+    <![CDATA[
+      SELECT  nvl(max(imageFileNO),0) from t_imageFile		
+    ]]>
+  </select>
+	
+  <select  id="selectImageFileList" resultMap="imgResult" parameterType="int">
+    <![CDATA[
+      SELECT * from t_imageFile
+      where articleNO=#{articleNO}	
+    ]]>
+  </select>
+    
+	<update id="updateProduct"  parameterType="java.util.Map">
+   
+			update product_t set
+			prodname=#{prodname},	 
+			cat=#{product-category},
+			price=#{price},
+			descr=#{descr}
+			 <if test="imageFileName!='' and imageFileName!=null">
+			  
+			  , img=#{imageFileName}
+			</if>
+			where prodno = #{prodno}
+			
+	</update>
+	
+</mapper>

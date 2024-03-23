@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+   <definition name="chartbase"  template="/WEB-INF/views/common/layout.jsp">
+      <put-attribute name="title" value="" />
+      <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+      <put-attribute name="side" value="/WEB-INF/views/common/side.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+   </definition>
+	
+   <definition name="/chart/simplechart" extends="chartbase">
+      <put-attribute name="title" value="간편 매출 통계" />
+      <put-attribute name="body" value="/WEB-INF/views/chart/simplechart.jsp" />
+   </definition>
+   
+	<definition name="/chart/tab-1" extends="chartbase">
+      <put-attribute name="title" value="매출요약" />
+      <put-attribute name="body" value="/WEB-INF/views/chart/sales_summary.jsp" />
+   </definition>
+   <definition name="/chart/week_chart" extends="chartbase">
+      <put-attribute name="title" value="요일별 통계" />
+      <put-attribute name="body" value="/WEB-INF/views/chart/week_chart.jsp" />
+   </definition>
+   <definition name="/chart/month_chart" extends="chartbase">
+      <put-attribute name="title" value="월별 통계" />
+      <put-attribute name="body" value="/WEB-INF/views/chart/month_chart.jsp" />
+   </definition>
+   <definition name="/chart/quater_chart" extends="chartbase">
+      <put-attribute name="title" value="분기별 통계" />
+      <put-attribute name="body" value="/WEB-INF/views/chart/quater_chart.jsp" />
+   </definition>
+   
+
+
+</tiles-definitions>

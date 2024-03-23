@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+	<resultMap id="memResult" type="memberVO">
+		<result property="userid" column="userid" />
+        <result property="pwd" column="pwd" />
+        <result property="phone" column="phone" />
+        <result property="username" column="username" />
+        <result property="gender" column="gender" />
+        <result property="addr" column="addr" />
+        <result property="regDate" column="regDate" />
+	</resultMap> 
+
+	<select id="selectAllMemberList" resultMap="memResult">
+      <![CDATA[
+         select * from user_t	 	
+      ]]>
+	</select>
+    
+  <select id="loginById"  resultType="memberVO"   parameterType="memberVO" >
+	<![CDATA[
+		select * from user_t	
+		where userid=#{userid jdbcType=VARCHAR} and pwd=#{pwd}		
+	]]>
+  </select>
+</mapper>
