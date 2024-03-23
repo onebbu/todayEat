@@ -1,0 +1,33 @@
+.show{
+                background-color: #e9e9e9;
+                padding:40px;
+                padding-bottom: 60px;
+                margin-top: 20px;
+                border-top: 0.5px solid #5a5a5a;
+            }
+            .grid{
+                display:grid;
+                grid-template-columns:  280px 280px 280px;
+                grid-template-rows: 180px 180px;
+                gap: 80px;
+            }
+            .box {
+                background-color: white;
+                width:90%;
+                height: 90%;
+                font-size: 15px;
+                border-top: 5px solid #5a5a5a;
+                padding: 20px;
+                line-height: 40px;
+            }
+            .number {
+            	overflow:hidden;
+            	word-wrap:break-word;
+            	font-size: 24px;
+                font-weight: bold;
+            }
+            .reset{
+            	position: absolute;
+        		left: 700px;
+        		top: 50px;
+            }

@@ -1,0 +1,75 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.reviewHeader{
+    background-color: lightgray;
+    height: 8rem;
+    font-size: 1rem;
+}
+
+.reviewHeaderWrap{
+    padding-left: 2rem;
+    padding-top: 2rem;
+}
+
+.rvHeaderD{
+    width: 10rem;
+}
+
+.rvHeaderD{
+    width: 20rem;
+}
+
+.content {
+    display: flex;
+    margin-left: 2rem;
+    margin-top: 1rem;
+
+}
+
+.contentImgWrap{
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+.contentImgWrap img{
+    width: 2rem;
+    height: 2.5rem;
+}
+
+.reviewDetail{
+    padding-right: 8rem;
+
+}
+
+/*Start of Star Rating*/
+.rating svg{
+    color:#ebebeb;
+}
+
+.rating svg:nth-child(-n){
+    color:#FFCC00;
+}
+/* End of Star Rating */
+
+.reviewDetail td{
+    width: 10rem;
+}
+
+.product-img-div {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.product-img {
+    max-width:12rem;
+    max-height:12rem;
+}
+
+
+.deleteBtn{
+    float: right;
+    padding-right: 3rem;
+}

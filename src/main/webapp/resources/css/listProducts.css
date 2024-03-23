@@ -1,0 +1,140 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.searchSortBar {
+    display: flex;
+    justify-content: space-between;
+    height: 5rem;
+    background-color: white;
+}
+
+.all {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 1rem;
+    margin-right: 10rem;
+}
+
+.search {
+    display: flex;
+    justify-content: space-between;
+    width: 20rem;
+    margin-right: 5vw;
+    margin-top: auto;
+    margin-bottom: auto;
+
+}
+
+.search-btn{
+    color:black;
+    border: none;
+    background-color: #ffffff;
+}
+
+.select {
+    height: 2rem;
+    width: 5rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 1rem;
+}
+
+.searchBox{
+    width: 20rem;
+    display: flex;
+}
+
+.searchBox input {
+    width: 100%;
+    margin-left: 1vw;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.isNull{
+    margin-left: 1rem;
+    font-size: 1rem;
+}
+
+
+.productList {
+    display: grid;
+    /*한 페이지에 보여지는 열의 수*/
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.productt {
+    text-align: center;
+    float: left;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    width: 12rem;
+}
+
+.product-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Start of Star Rating*/
+.rating svg{
+    color:#ebebeb;
+}
+
+.rating svg:nth-child(-n){
+    color:#FFCC00;
+}
+/* End of Star Rating */
+
+.product-img-wrap {
+    text-align:center;
+    display:table;
+    /*border:1px solid #cecece;*/
+    width:12rem;
+    height:12rem;
+    background-color: #f8f8f8;
+}
+
+.product-img-div {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.product-img {
+    max-width:12rem;
+    max-height:12rem;
+}
+
+.product-info {
+    margin-top: 1rem;
+    color: #545454;
+    margin-bottom: 5vw;
+
+}
+
+.pagination_wrap {
+    display: flex;
+    height: 5rem;
+    width: 100%;
+    background-color: #364e50;
+    margin: auto;
+}
+
+.pagination {
+    display: inline-block;
+    margin: auto;
+}
+
+.pagination a {
+    color: #f8f8f8;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: auto;
+    float: left;
+}

@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+.menu-title{
+    /* height: 24px; */
+    background-color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    font-weight: lighter;
+    border-bottom: 1px solid #c8c8c8;
+
+}
+.menu{
+    background-color: white;
+    border-bottom: 1px solid #c8c8c8;
+    margin-top: -16px; /*왜그런지 전혀 모르겠으나 위 menu-title과 자꾸 떨어짐 ㅅㅂ */
+}
+.inner-menu li:first-child {
+  border-left:1px solid #c8c8c8;
+}
+.inner-menu li{
+    /* display: block; */
+    list-style: none;
+    color: black;
+    float: left;
+    /* position: relative; */
+    text-align: center;
+    padding: 10px 20px;
+    border-right: 1px solid #c8c8c8;
+    cursor: pointer;
+}
+
+.inner-menu li:hover{
+    background: rgba(211, 211, 211, 0.488);
+    color: blue;
+}
+
+.is_on{
+    font-weight:bold;
+    color: rgb(0, 99, 0); /* 이거 왜 안되노 ㅜㅜ*/
+    border-top: 3px solid gold;
+}
+#tabcontent{
+    /* margin: 10px; */
+    padding: 20px;
+    background-color: f8f8f9; 
+    display: none;
+    padding-bottom: 500px;
+}
+.chart.show {
+    display: block;
+    text-align:center; 
+    width:500px;
+    padding-bottom: 500px;
+}
+#tabcontent {
+	padding-bottom: 100px;
+	margin-bottom: 100px;
+}
+
+#tab-1 {
+  height: 500px;
+}
