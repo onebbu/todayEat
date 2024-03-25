@@ -46,7 +46,7 @@
 3. 상품 등록
 4. 상품 상세 조회(조회, 수정, 삭제)
 5. 매출 통계 조회(매출 요약, 요일별 통계, 월별 통계, 분기별 통계)
-6. 리뷰 조회(조회, 삭제)
+6. 리뷰 조회(조회)
 
 ## 🛠️ 기술 스택
 ### `Front-end`
@@ -65,7 +65,30 @@
 - Google Drive
 - zoom
 ## 🗃️ ERD
-![image](https://github.com/onebbu/todayEat/assets/101400455/52ec3253-49b2-4a7e-9240-523f6b9c7b30)
+<img src="https://github.com/onebbu/todayEat/assets/101400455/52ec3253-49b2-4a7e-9240-523f6b9c7b30" width="640" height="360"/>
 
 ## 📽️ 시연 영상
-
+<details>
+  <summary>1. 로그인</summary>
+   <img src="https://github.com/onebbu/todayEat/assets/101400455/79a85f02-8113-4093-93bd-f801e0a0a800" width="512" height="288"/> 
+</details>
+<details>
+  <summary>2. 상품 목록 조회-1(조회, 페이징, 삭제, 전체 정렬)  </summary>
+  <img src="https://github.com/onebbu/todayEat/assets/101400455/5acb288a-7c25-4756-8bef-36cf5a2147e7" width="512" height="288"/>
+</details>
+<details>
+  <summary>3. 상품 목록 조회-2(검색, 검색 후 정렬)</summary>
+    <img src="https://github.com/onebbu/todayEat/assets/101400455/5d03c095-db5a-4be8-9658-da155e1453fb" width="512" height="288"/>
+</details>
+<details>
+  <summary>4. 상품 및 리뷰 조회</summary>
+    <img src="https://github.com/onebbu/todayEat/assets/101400455/2b1e8fce-7b4a-4f0b-8290-4b3ae90d8cb1" width="512" height="288"/> 
+</details>
+<details>
+  <summary>5. 상품 등록, 수정, 삭제</summary>
+    <img src="https://github.com/onebbu/todayEat/assets/101400455/f9eebbd0-6fe2-4803-8694-8f9703218d1b" width="512" height="288"/>
+</details>
+<details>
+  <summary>6. 매출 통계 조회(매출 요약, 요일별 통계, 월별 통계, 분기별 통계) </summary>
+    업로드 예정  
+</details>
