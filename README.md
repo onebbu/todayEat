@@ -89,6 +89,7 @@
     <img src="https://github.com/onebbu/todayEat/assets/101400455/f9eebbd0-6fe2-4803-8694-8f9703218d1b" width="512" height="288"/>
 </details>
 <details>
-  <summary>6. 매출 통계 조회(매출 요약, 요일별 통계, 월별 통계, 분기별 통계) </summary>
-    업로드 예정  
+  <summary>6. 매출 통계 조회(요일별 통계, 월별 통계) </summary>
+     <img src="https://github.com/onebbu/todayEat/assets/101400455/df2d8082-b231-4095-9f90-fcfafdf3af92" width="512" height="288"/> 
 </details>
+
