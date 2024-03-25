@@ -37,7 +37,8 @@ import com.mycompany.myeat.product.vo.PageMaker;
 @Controller("productController")
 public class ProductControllerImpl implements ProductController {
 
-	private static String img = "C:\\Users\\vmfdo\\StudySource\\mulcam_eclipse3916\\todayeat\\src\\main\\webapp\\resources\\images";
+	// 이미지 경로 수정
+	private static String img = "";
 
 	// 경로 수정
 	private static final String PRODUCT_IMAGE_REPO = img;
