@@ -23,192 +23,193 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller("chartController")
 public class chartControllerImpl implements chartController {
-	@Autowired
-	ChartVO chartvo;
-	@Autowired
-	private SqlSession sqlSession;
-	
-	@Override
-	@RequestMapping(value = "/chart/simplechart.do", method = RequestMethod.GET)
-	public ModelAndView simplechart(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String viewName = "/chart/simplechart";
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(viewName);
-		return mav;
-	}
-	
-	@Override
-	@RequestMapping(value = "/chart/tab-1.do", method = RequestMethod.GET)
-	public ModelAndView tab01(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String viewName = getViewName(request);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(viewName);
-		return mav;
-	}
-	
-	@Override
-	@RequestMapping(value = "/chart/tab-2.do", method = RequestMethod.GET)
-	public ModelAndView tab02(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String viewName = "/chart/week_chart";
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(viewName);
-		return mav;
-	}
-	
-	@Override
-	@RequestMapping(value = "/chart/tab-3.do", method = RequestMethod.GET)
-	public ModelAndView tab03(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String viewName = "/chart/month_chart";
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(viewName);
-		return mav;
-	}
-	
-	@Override
-	@RequestMapping(value = "/chart/tab-4.do", method = RequestMethod.GET)
-	public ModelAndView tab04(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String viewName = "/chart/quater_chart";
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(viewName);
-		return mav;
-	}
+   @Autowired
+   ChartVO chartvo;
+   @Autowired
+   private SqlSession sqlSession;
+   
+   @Override
+   @RequestMapping(value = "/chart/simplechart.do", method = RequestMethod.GET)
+   public ModelAndView simplechart(HttpServletRequest request, HttpServletResponse response) throws Exception{
+      String viewName = "/chart/simplechart";
+      ModelAndView mav = new ModelAndView();
+      mav.setViewName(viewName);
+      return mav;
+   }
+   //tab-1 ~ tab-6 Îã®Ïàú ÌéòÏù¥ÏßÄ Ïù¥Îèô Í∏∞Îä•
+   @Override
+   @RequestMapping(value = "/chart/tab-1.do", method = RequestMethod.GET)
+   public ModelAndView tab01(HttpServletRequest request, HttpServletResponse response) throws Exception{
+      String viewName = getViewName(request);
+      ModelAndView mav = new ModelAndView();
+      mav.setViewName(viewName);
+      return mav;
+   }
+   
+   @Override
+   @RequestMapping(value = "/chart/tab-2.do", method = RequestMethod.GET)
+   public ModelAndView tab02(HttpServletRequest request, HttpServletResponse response) throws Exception{
+      String viewName = "/chart/week_chart";
+      ModelAndView mav = new ModelAndView();
+      mav.setViewName(viewName);
+      return mav;
+   }
+   
+   @Override
+   @RequestMapping(value = "/chart/tab-3.do", method = RequestMethod.GET)
+   public ModelAndView tab03(HttpServletRequest request, HttpServletResponse response) throws Exception{
+      String viewName = "/chart/month_chart";
+      ModelAndView mav = new ModelAndView();
+      mav.setViewName(viewName);
+      return mav;
+   }
+   
+   @Override
+   @RequestMapping(value = "/chart/tab-4.do", method = RequestMethod.GET)
+   public ModelAndView tab04(HttpServletRequest request, HttpServletResponse response) throws Exception{
+      String viewName = "/chart/quater_chart";
+      ModelAndView mav = new ModelAndView();
+      mav.setViewName(viewName);
+      return mav;
+   }
+   
+   //lookup Ï°∞ÌöåÌïòÍ∏∞. ÏõêÎûò Service, DAO Î∂ÑÎ¶¨Ìï¥ÏïºÌïòÏßÄÎßå Ïûò Î™®Î•¥Í≤†Ïñ¥ÏÑú Í±ç Ïª®Ìä∏Î°§Îü¨Ïóê Î∂ÑÎ¶¨Ìï¥ÎÑ£Ïùå... 
+   @Override
+   @RequestMapping(value = "/chart/tab-1/lookup.do", method = RequestMethod.GET)
+   public ModelAndView tab01lookup(@ModelAttribute("chart") ChartVO chart,
+                        RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception {
+      ModelAndView mav = new ModelAndView();
+      Date date_from = Date.valueOf(request.getParameter("date_from"));
+      Date date_to = Date.valueOf(request.getParameter("date_to"));
+      int box01 = sqlSession.selectOne("mapper.chart.selectbox1",chart);
+      int box02 = sqlSession.selectOne("mapper.chart.selectbox2", chart);
+      int box03 = sqlSession.selectOne("mapper.chart.selectbox3", chart);
+      String box04 = sqlSession.selectOne("mapper.chart.selectbox4", chart);
+      int box04_1 = sqlSession.selectOne("mapper.chart.selectbox4-1", chart);
+      String box05 = sqlSession.selectOne("mapper.chart.selectbox5", chart);
+      int box05_1 = sqlSession.selectOne("mapper.chart.selectbox5-1", chart);
+      String box06 = sqlSession.selectOne("mapper.chart.selectbox6", chart);
+      int box06_1 = sqlSession.selectOne("mapper.chart.selectbox6-1", chart);
+      request.setAttribute("date_from", date_from);
+      request.setAttribute("date_to", date_to);
 
-	@Override
-	@RequestMapping(value = "/chart/tab-1/lookup.do", method = RequestMethod.GET)
-	public ModelAndView tab01lookup(@ModelAttribute("chart") ChartVO chart,
-								RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		Date date_from = Date.valueOf(request.getParameter("date_from"));
-		Date date_to = Date.valueOf(request.getParameter("date_to"));
-		int box01 = sqlSession.selectOne("mapper.chart.selectbox1",chart);
-		int box02 = sqlSession.selectOne("mapper.chart.selectbox2", chart);
-		int box03 = sqlSession.selectOne("mapper.chart.selectbox3", chart);
-		String box04 = sqlSession.selectOne("mapper.chart.selectbox4", chart);
-		int box04_1 = sqlSession.selectOne("mapper.chart.selectbox4-1", chart);
-		String box05 = sqlSession.selectOne("mapper.chart.selectbox5", chart);
-		int box05_1 = sqlSession.selectOne("mapper.chart.selectbox5-1", chart);
-		String box06 = sqlSession.selectOne("mapper.chart.selectbox6", chart);
-		int box06_1 = sqlSession.selectOne("mapper.chart.selectbox6-1", chart);
-		request.setAttribute("date_from", date_from);
-		request.setAttribute("date_to", date_to);
+      mav.addObject("box01", box01);
+      mav.addObject("box02", box02);
+      mav.addObject("box03", box03);
+      mav.addObject("box04", box04);
+      mav.addObject("box04_1", box04_1);
+      double box04Per = (double)box04_1 / (double)box01;
+      mav.addObject("box04Per",box04Per);
+      mav.addObject("box05", box05);
+      mav.addObject("box05_1", box05_1);
+      double box05Per = (double)box05_1 / (double)box03;
+      mav.addObject("box05Per",box05Per);
+      mav.addObject("box06", box06);
+      mav.addObject("box06_1", box06_1);
 
-		mav.addObject("box01", box01);
-		mav.addObject("box02", box02);
-		mav.addObject("box03", box03);
-		mav.addObject("box04", box04);
-		mav.addObject("box04_1", box04_1);
-		double box04Per = (double)box04_1 / (double)box01;
-		mav.addObject("box04Per",box04Per);
-		mav.addObject("box05", box05);
-		mav.addObject("box05_1", box05_1);
-		double box05Per = (double)box05_1 / (double)box03;
-		mav.addObject("box05Per",box05Per);
-		mav.addObject("box06", box06);
-		mav.addObject("box06_1", box06_1);
+      mav.setViewName("forward:/chart/tab-1.do");
+   
+      return mav;
+   }
+   
+   @Override
+   @RequestMapping(value = "/chart/tab-2/lookup.do", method = RequestMethod.GET)
+   public ModelAndView tab02lookup(@ModelAttribute("chart") ChartVO chart,
+                        RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception {
+      ModelAndView mav = new ModelAndView();
+      Date date_from = Date.valueOf(request.getParameter("date_from"));
+      Date date_to = Date.valueOf(request.getParameter("date_to"));
+      request.setAttribute("date_from", date_from);
+      request.setAttribute("date_to", date_to);
+      Map<String,Object>map = new HashMap<String,Object>();
+      
+      map.put("date_from", date_from);
+      map.put("date_to", date_to);
 
-		mav.setViewName("forward:/chart/tab-1.do");
-	
-		return mav;
-	}
-	
-	@Override
-	@RequestMapping(value = "/chart/tab-2/lookup.do", method = RequestMethod.GET)
-	public ModelAndView tab02lookup(@ModelAttribute("chart") ChartVO chart,
-								RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		Date date_from = Date.valueOf(request.getParameter("date_from"));
-		Date date_to = Date.valueOf(request.getParameter("date_to"));
-		request.setAttribute("date_from", date_from);
-		request.setAttribute("date_to", date_to);
-		Map<String,Object>map = new HashMap<String,Object>();
-		
-		map.put("date_from", date_from);
-		map.put("date_to", date_to);
-
-		int[] weeklist = new int[8]; // 1:¿œ 2:ø˘ 3:»≠ 4:ºˆ 5:∏Ò 6:±› 7:≈‰
-		for(int i = 1; i < 8; i ++ ) {
-			map.put("i", i);
-			weeklist[i] = sqlSession.selectOne("mapper.chart.weekSumPrice",map); //∆ƒ∂ÛπÃ≈Õ∑Œ chart(date_from,date_to)øÕ i(weekday) ¿¸¥ﬁ
-		}
-		mav.addObject("weeklist",weeklist);
-		mav.setViewName("forward:/chart/tab-2.do");
-		
-		return mav;
-	}
-	
-	@Override
-	@RequestMapping(value = "/chart/tab-3/lookup.do", method = RequestMethod.GET)
-	public ModelAndView tab03lookup(@ModelAttribute("input_date") Date input_date,
-								RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat yyMM = new SimpleDateFormat("yy-MM");
-		Calendar cal = Calendar.getInstance();
-		Date date_from = Date.valueOf(input_date.toString());
-		Date date_to = Date.valueOf(input_date.toString());
-		cal.setTime(date_from);
-		cal.add(Calendar.MONTH, -5);
-		date_from = Date.valueOf(sdfYMD.format(cal.getTime()));
-		request.setAttribute("date_from", date_from);
-		request.setAttribute("date_to", date_to);
-		Map<String,Object>map = new HashMap<String,Object>();
-		
-		String[] mList = new String[7];
-		
-		int[] monthlist_han = new int[7]; // «—Ωƒ
-		int[] monthlist_yang = new int[7]; //æÁΩƒ
-		int[] monthlist_joong = new int[7]; //¡ﬂΩƒ
-		int[] monthlist_boon = new int[7]; //∫–Ωƒ
-		int[] cntH = new int[7];
-		int[] cntY = new int[7];
-		Date start; //ø˘√ 
-		Date end; //ø˘∏ª
-		
-		cal.setTime(date_from);
-		cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DAY_OF_MONTH)); // ø˘ √ 
-		
-		for(int i = 1; i < 7; i ++ ) {
-			
-			start = Date.valueOf(sdfYMD.format(cal.getTime()));
-			cal.set(Calendar.DATE,  cal.getActualMaximum(Calendar.DAY_OF_MONTH)); // ∏∂¡ˆ∏∑ ¿œ.
-			end = Date.valueOf(sdfYMD.format(cal.getTime()));
-			mList[i] = yyMM.format(start); 
-			map.put("start", start);
-			map.put("end", end);
-			map.put("cat", "«—Ωƒ");
-			monthlist_han[i] = sqlSession.selectOne("mapper.chart.monthSumPrice",map);
-			cntH[i] = sqlSession.selectOne("mapper.chart.monthCntCat",map);
-			map.put("cat", "æÁΩƒ");
-			monthlist_yang[i] = sqlSession.selectOne("mapper.chart.monthSumPrice",map);
-			cntY[i] = sqlSession.selectOne("mapper.chart.monthCntCat",map);
-			map.put("cat", "¡ﬂΩƒ");
-			monthlist_joong[i] = sqlSession.selectOne("mapper.chart.monthSumPrice",map);
-			map.put("cat", "∫–Ωƒ");
-			monthlist_boon[i] = sqlSession.selectOne("mapper.chart.monthSumPrice",map); 
-			
-			
-			//∆ƒ∂ÛπÃ≈Õ∑Œ chart(date_from,date_to)øÕ i(month), cat(«—Ωƒ) ¿¸¥ﬁ
-			cal.add(Calendar.DATE, 1);	
-		}
-		
-		mav.addObject("mList", mList);
-		mav.addObject("monthlist_han",monthlist_han);
-		mav.addObject("mL_yang",monthlist_yang);
-		mav.addObject("monthlist_joong",monthlist_joong);
-		mav.addObject("mL_B",monthlist_boon);
-		mav.addObject("cntH", cntH);
-		mav.addObject("cntY", cntY);
-		
-		
-		
-		mav.setViewName("forward:/chart/tab-3.do");
-		
-		return mav;
-	}
-	
-	
-	private String getViewName(HttpServletRequest request) throws Exception {
-		String contextPath = request.getContextPath();
+      int[] weeklist = new int[8]; // 1:Ïùº 2:Ïõî 3:Ìôî 4:Ïàò 5:Î™© 6:Í∏à 7:ÌÜ†
+      for(int i = 1; i < 8; i ++ ) {
+         map.put("i", i);
+         weeklist[i] = sqlSession.selectOne("mapper.chart.weekSumPrice",map); //ÌååÎùºÎØ∏ÌÑ∞Î°ú chart(date_from,date_to)ÏôÄ i(weekday) Ï†ÑÎã¨
+      }
+      mav.addObject("weeklist",weeklist);
+      mav.setViewName("forward:/chart/tab-2.do");
+      
+      return mav;
+   }
+   
+   @Override
+   @RequestMapping(value = "/chart/tab-3/lookup.do", method = RequestMethod.GET)
+   public ModelAndView tab03lookup(@ModelAttribute("input_date") Date input_date,
+                        RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception {
+      ModelAndView mav = new ModelAndView();
+      SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyy-MM-dd");
+      SimpleDateFormat yyMM = new SimpleDateFormat("yy-MM");
+      Calendar cal = Calendar.getInstance();
+      Date date_from = Date.valueOf(input_date.toString());
+      Date date_to = Date.valueOf(input_date.toString());
+      cal.setTime(date_from);
+      cal.add(Calendar.MONTH, -5);
+      date_from = Date.valueOf(sdfYMD.format(cal.getTime()));
+      request.setAttribute("date_from", date_from);
+      request.setAttribute("date_to", date_to);
+      Map<String,Object>map = new HashMap<String,Object>();
+      
+      String[] mList = new String[7];
+      
+      int[] monthlist_han = new int[7]; // ÌïúÏãù
+      int[] monthlist_yang = new int[7]; //ÏñëÏãù
+      int[] monthlist_joong = new int[7]; //Ï§ëÏãù
+      int[] monthlist_boon = new int[7]; //Î∂ÑÏãù
+      int[] cntH = new int[7];
+      int[] cntY = new int[7];
+      Date start; //ÏõîÏ¥à
+      Date end; //ÏõîÎßê
+      
+      cal.setTime(date_from);
+      cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DAY_OF_MONTH)); // Ïõî Ï¥à
+      
+      for(int i = 1; i < 7; i ++ ) {
+         
+         start = Date.valueOf(sdfYMD.format(cal.getTime()));
+         cal.set(Calendar.DATE,  cal.getActualMaximum(Calendar.DAY_OF_MONTH)); // ÎßàÏßÄÎßâ Ïùº.
+         end = Date.valueOf(sdfYMD.format(cal.getTime()));
+         mList[i] = yyMM.format(start); 
+         map.put("start", start);
+         map.put("end", end);
+         map.put("cat", "ÌïúÏãù");
+         monthlist_han[i] = sqlSession.selectOne("mapper.chart.monthSumPrice",map);
+         cntH[i] = sqlSession.selectOne("mapper.chart.monthCntCat",map);
+         map.put("cat", "ÏñëÏãù");
+         monthlist_yang[i] = sqlSession.selectOne("mapper.chart.monthSumPrice",map);
+         cntY[i] = sqlSession.selectOne("mapper.chart.monthCntCat",map);
+         map.put("cat", "Ï§ëÏãù");
+         monthlist_joong[i] = sqlSession.selectOne("mapper.chart.monthSumPrice",map);
+         map.put("cat", "Î∂ÑÏãù");
+         monthlist_boon[i] = sqlSession.selectOne("mapper.chart.monthSumPrice",map); 
+         
+         
+         //ÌååÎùºÎØ∏ÌÑ∞Î°ú chart(date_from,date_to)ÏôÄ i(month), cat(ÌïúÏãù) Ï†ÑÎã¨
+         cal.add(Calendar.DATE, 1);   
+      }
+      
+      mav.addObject("mList", mList);
+      mav.addObject("monthlist_han",monthlist_han);
+      mav.addObject("mL_yang",monthlist_yang);
+      mav.addObject("monthlist_joong",monthlist_joong);
+      mav.addObject("mL_B",monthlist_boon);
+      mav.addObject("cntH", cntH);
+      mav.addObject("cntY", cntY);
+      
+      
+      
+      mav.setViewName("forward:/chart/tab-3.do");
+      
+      return mav;
+   }
+   
+   
+   private String getViewName(HttpServletRequest request) throws Exception {
+      String contextPath = request.getContextPath();
         String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
         if (uri == null || uri.trim().equals("")) {
             uri = request.getRequestURI();
@@ -230,13 +231,13 @@ public class chartControllerImpl implements chartController {
  
         String viewName = uri.substring(begin, end);
         if(viewName.indexOf(".") != -1) {
-        	viewName = viewName.substring(0, viewName.lastIndexOf("."));
+           viewName = viewName.substring(0, viewName.lastIndexOf("."));
         }
-		if(viewName.lastIndexOf("/") != -1) {
-			viewName = viewName.substring(viewName.lastIndexOf("/",1),viewName.length());
-			 //   member/listMembers.do
-		}
-		return viewName;
-	}
-	
+      if(viewName.lastIndexOf("/") != -1) {
+         viewName = viewName.substring(viewName.lastIndexOf("/",1),viewName.length());
+          //   member/listMembers.do
+      }
+      return viewName;
+   }
+   
 }
