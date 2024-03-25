@@ -90,6 +90,5 @@
 </details>
 <details>
   <summary>6. 매출 통계 조회(요일별 통계, 월별 통계) </summary>
-     <img src="https://github.com/onebbu/todayEat/assets/101400455/df2d8082-b231-4095-9f90-fcfafdf3af92" width="512" height="288"/> 
+     <img src="https://github.com/onebbu/todayEat/assets/101400455/b104763b-7cab-4ccb-bd49-5da9d6390f8f" width="512" height="288"/> 
 </details>
-
